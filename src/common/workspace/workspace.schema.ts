@@ -1,8 +1,7 @@
-import { gql } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
 import Workspace from './workspace.model';
 
-const typeDefs = gql`
+export const workspaceTypeDefs = `
   type Workspace {
     id: ID!
     name: String!
@@ -12,18 +11,13 @@ const typeDefs = gql`
     name: String
   }
 
-  type Query {
+  extend type Query {
     workspaces(input: WorkspaceInput): [Workspace]
     workspace(id: String!): Workspace
   }
 
-  type Mutation {
+  extend type Mutation {
     addWorkspace(input: WorkspaceInput!): Workspace
-  }
-
-  schema {
-    query: Query
-    mutation: Mutation
   }
 `;
 
@@ -32,7 +26,7 @@ interface IWorkspaceInput {
   lastName: string;
 }
 
-const resolvers: any = {
+export const workspaceResolvers: any = {
   Query: {
     workspaces(_: any, { input }: { input: IWorkspaceInput }) {
       return Workspace.find(input);
@@ -49,6 +43,6 @@ const resolvers: any = {
 };
 
 export default makeExecutableSchema({
-  typeDefs,
-  resolvers,
+  typeDefs: workspaceTypeDefs,
+  resolvers: workspaceResolvers,
 });
