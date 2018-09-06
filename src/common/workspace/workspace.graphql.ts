@@ -1,19 +1,18 @@
 import { gql } from 'apollo-server';
 
 export default gql`
-  type User {
+  type Workspace {
     id: ID!
-    firstName: String
-    lastName: String
+    name: String
   }
 
   type Query {
-    users: [User]
-    user(id: String!): User
+    workspaces: [Workspace]
+    workspace(id: String!): Workspace
   }
 
   type Mutation {
-    addUser(firstName: String, lastName: String): User
+    addWorkspace(name: String): Workspace
   }
 
   schema {
