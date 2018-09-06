@@ -21,6 +21,8 @@ const typeDefs = gql`
 
   type Mutation {
     addUser(input: UserInput!): User
+    editUser(id: String!, input: UserInput!): User
+    deleteUser(id: String!): User
   }
 
   schema {
@@ -46,6 +48,12 @@ const resolvers: any = {
   Mutation: {
     addUser(_: any, { input }: { input: IUserInput }) {
       return User.create(input);
+    },
+    editUser(_: any, { id, input }: { id: string; input: IUserInput }) {
+      return User.findByIdAndUpdate(id, input);
+    },
+    deleteUser(_: any, { id }: { id: string }) {
+      return User.findByIdAndRemove(id);
     },
   },
 };
