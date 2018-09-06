@@ -9,5 +9,5 @@
     "src"
   ],
   "ext": "ts",
-  "exec": "npm run dev"
+  "exec": "npm run start:debug"
 }

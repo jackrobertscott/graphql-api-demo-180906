@@ -24,6 +24,7 @@
     "@types/mongoose": "^5.2.10",
     "apollo-server": "^2.0.7",
     "graphql": "^14.0.0",
+    "graphql-tools": "^3.1.1",
     "mongoose": "^5.2.13",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"

@@ -6,6 +6,9 @@
     "tslint-config-prettier"
   ],
   "jsRules": {},
-  "rules": {},
+  "rules": {
+    "object-literal-sort-keys": false,
+    "ordered-imports": false
+  },
   "rulesDirectory": []
 }
