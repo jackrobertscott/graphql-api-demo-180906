@@ -1,20 +1,24 @@
 import { gql } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
-import workspace from './workspace.model';
+import Workspace from './workspace.model';
 
 const typeDefs = gql`
   type Workspace {
     id: ID!
+    name: String!
+  }
+
+  input WorkspaceInput {
     name: String
   }
 
   type Query {
-    workspaces: [Workspace]
+    workspaces(input: WorkspaceInput): [Workspace]
     workspace(id: String!): Workspace
   }
 
   type Mutation {
-    addWorkspace(name: String): Workspace
+    addWorkspace(input: WorkspaceInput!): Workspace
   }
 
   schema {
@@ -23,18 +27,23 @@ const typeDefs = gql`
   }
 `;
 
+interface IWorkspaceInput {
+  firstName: string;
+  lastName: string;
+}
+
 const resolvers: any = {
   Query: {
-    workspaces() {
-      return workspace.find({});
+    workspaces(_: any, { input }: { input: IWorkspaceInput }) {
+      return Workspace.find(input);
     },
-    workspace(_: any, args: { id: string }) {
-      return workspace.findById(args.id);
+    workspace(_: any, { id }: { id: string }) {
+      return Workspace.findById(id);
     },
   },
   Mutation: {
-    addWorkspace(_: any, args: object) {
-      return workspace.create(args);
+    addWorkspace(_: any, { input }: { input: IWorkspaceInput }) {
+      return Workspace.create(input);
     },
   },
 };

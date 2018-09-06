@@ -9,13 +9,18 @@ const typeDefs = gql`
     lastName: String
   }
 
+  input UserInput {
+    firstName: String
+    lastName: String
+  }
+
   type Query {
-    users: [User]
+    users(input: UserInput): [User]
     user(id: String!): User
   }
 
   type Mutation {
-    addUser(firstName: String, lastName: String): User
+    addUser(input: UserInput!): User
   }
 
   schema {
@@ -24,18 +29,23 @@ const typeDefs = gql`
   }
 `;
 
+interface IUserInput {
+  firstName: string;
+  lastName: string;
+}
+
 const resolvers: any = {
   Query: {
-    users() {
-      return User.find({});
+    users(_: any, { input }: { input: IUserInput }) {
+      return User.find(input);
     },
-    user(_: any, args: { id: string }) {
-      return User.findById(args.id);
+    user(_: any, { id }: { id: string }) {
+      return User.findById(id);
     },
   },
   Mutation: {
-    addUser(_: any, args: object) {
-      return User.create(args);
+    addUser(_: any, { input }: { input: IUserInput }) {
+      return User.create(input);
     },
   },
 };
