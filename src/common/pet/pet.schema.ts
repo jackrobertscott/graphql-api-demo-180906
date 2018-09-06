@@ -51,8 +51,3 @@ export const petResolvers: any = {
     },
   },
 };
-
-export default makeExecutableSchema({
-  typeDefs: petTypeDefs,
-  resolvers: petResolvers,
-});

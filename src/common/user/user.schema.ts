@@ -51,8 +51,3 @@ export const userResolvers: any = {
     },
   },
 };
-
-export default makeExecutableSchema({
-  typeDefs: userTypeDefs,
-  resolvers: userResolvers,
-});

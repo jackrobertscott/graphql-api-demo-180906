@@ -41,8 +41,3 @@ export const workspaceResolvers: any = {
     },
   },
 };
-
-export default makeExecutableSchema({
-  typeDefs: workspaceTypeDefs,
-  resolvers: workspaceResolvers,
-});
