@@ -4,7 +4,32 @@
   "description": "An implementation of GraphQL.",
   "author": "Jack Scott <jack.rob.scott@gmail.com>",
   "main": "src/index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node build/index.js",
+    "start:ts": "ts-node src/index.ts",
+    "dev": "node --inspect=5858 -r ts-node/register src/index.ts",
+    "debug": "nodemon",
+    "test": "NODE_ENV=test mocha --require=ts-node/register --recursive --exit 'src/**/*.spec.ts'",
+    "compile": "rm -rf build/* && tsc",
+    "normalize": "npm run format && npm run lint",
+    "format": "prettier --write --loglevel=warn 'src/**/*.ts'",
+    "lint": "tslint src/**/*.ts",
+    "deploy": "npm run deploy:dev && npm run deploy:prod",
+    "deploy:dev": "npm run compile && now --local-config=now.dev.json && now alias --local-config=now.dev.json",
+    "deploy:prod": "npm run compile && now --local-config=now.prod.json && now alias --local-config=now.prod.json"
+  },
+  "dependencies": {
+    "ts-node": "^7.0.1",
+    "typescript": "^3.0.3"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "mocha": "^5.2.0",
+    "nodemon": "^1.18.4",
+    "prettier": "^1.14.2",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-eslint-rules": "^5.4.0"
   }
 }

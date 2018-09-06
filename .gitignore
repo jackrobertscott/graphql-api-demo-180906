@@ -1,0 +1,30 @@
+# Dependencies
+node_modules
+package-lock.json
+
+# Environment
+.env
+*.env*
+!.env.example
+
+# MAC Files
+.DS_Store
+
+# Npm cache directory
+.npm
+
+# Coverage
+coverage
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Runtime data
+pids
+*.pid
+*.seed
+
+# Build
+build
