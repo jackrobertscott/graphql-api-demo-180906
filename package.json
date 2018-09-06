@@ -1,7 +1,7 @@
 {
   "name": "snippets-api",
   "version": "0.1.0",
-  "description": "An implementation of GraphQL with Mongoose.",
+  "description": "An implementation of GraphQL.",
   "author": "Jack Scott <jack.rob.scott@gmail.com>",
   "main": "src/index.js",
   "scripts": {
