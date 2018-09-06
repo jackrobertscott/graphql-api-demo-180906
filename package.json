@@ -8,8 +8,8 @@
   "scripts": {
     "start": "node build/index.js",
     "start:ts": "ts-node src/index.ts",
-    "dev": "node --inspect=5858 -r ts-node/register src/index.ts",
-    "debug": "nodemon",
+    "start:debug": "node --inspect=5858 -r ts-node/register src/index.ts",
+    "dev": "nodemon",
     "test": "NODE_ENV=test mocha --require=ts-node/register --recursive --exit 'src/**/*.spec.ts'",
     "compile": "rm -rf build/* && tsc",
     "normalize": "npm run format && npm run lint",
@@ -20,6 +20,11 @@
     "deploy:prod": "npm run compile && now --local-config=now.prod.json && now alias --local-config=now.prod.json"
   },
   "dependencies": {
+    "@types/graphql": "^14.0.0",
+    "@types/mongoose": "^5.2.10",
+    "apollo-server": "^2.0.7",
+    "graphql": "^14.0.0",
+    "mongoose": "^5.2.13",
     "ts-node": "^7.0.1",
     "typescript": "^3.0.3"
   },
