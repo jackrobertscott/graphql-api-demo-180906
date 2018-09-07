@@ -21,7 +21,13 @@ const schema = makeExecutableSchema({
   resolvers: merge(userResolvers, workspaceResolvers, petResolvers),
 });
 
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({
+  schema,
+  formatError: (error: any) => {
+    console.log(error);
+    return new Error('Internal server error');
+  },
+});
 
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);

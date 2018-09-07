@@ -6,14 +6,13 @@ export const petTypeDefs = `
   type Pet {
     id: ID!
     name: String!
-    userId: ID!
+    userId: ID
     user: User
   }
 
   input PetInput {
-    name: String
-    userId: ID
-    user: User
+    name: String!
+    userId: ID!
   }
 
   extend type Query {
@@ -27,27 +26,35 @@ export const petTypeDefs = `
 `;
 
 interface IPetInput {
-  firstName: string;
-  lastName: string;
+  name: string;
+  userId: string;
 }
+
+const petToObject = (pet: any) => ({
+  ...pet.toObject(),
+  id: pet._id.toString(),
+  userId: pet.userId.toString(),
+});
 
 export const petResolvers: any = {
   Query: {
-    pets(_: any, { input }: { input: IPetInput }) {
-      return Pet.find(input);
+    async pets(_: any, { input }: { input: IPetInput }) {
+      const pets = await Pet.find(input);
+      return pets.map(petToObject);
     },
     pet(_: any, { id }: { id: string }) {
       return Pet.findById(id);
     },
   },
   Mutation: {
-    addPet(_: any, { input }: { input: IPetInput }) {
-      return Pet.create(input);
+    async addPet(_: any, { input }: { input: IPetInput }) {
+      const pet: any = await Pet.create(input);
+      return petToObject(pet);
     },
   },
   Pet: {
     user(pet: { userId: string }) {
-      return User.findById(pet.userId);
+      return pet.userId ? User.findById(pet.userId) : null;
     },
   },
 };
