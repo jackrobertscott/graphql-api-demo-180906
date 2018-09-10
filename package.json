@@ -1,10 +1,9 @@
 {
-  "name": "snippets-api",
+  "name": "graphql-api-demo",
   "version": "0.1.0",
   "description": "An implementation of GraphQL.",
   "author": "Jack Scott <jack.rob.scott@gmail.com>",
   "main": "src/index.js",
-  "private": true,
   "scripts": {
     "start": "node build/index.js",
     "start:ts": "ts-node src/index.ts",

@@ -12,7 +12,8 @@ import {
 import { petResolvers, petTypeDefs } from './common/pet/pet.schema';
 
 mongoose.connect(
-  'mongodb://localhost/snippets',
+  // replace with environment variable in production
+  'mongodb://localhost/graphql-demo',
   { useNewUrlParser: true }
 );
 
