@@ -21,6 +21,12 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+userSchema.set('toObject', { virtuals: true });
+
+userSchema.method('toGraph', function toGraph(this: any) {
+  return JSON.parse(JSON.stringify(this));
+});
+
 userSchema.pre('save', function preSave(this: any, next) {
   if (!this.isModified('password')) {
     next();
@@ -36,7 +42,7 @@ userSchema.pre('save', function preSave(this: any, next) {
   }
 });
 
-userSchema.methods.comparePassword = function comparePassword(
+userSchema.method('comparePassword', function comparePassword(
   this: any,
   candidate: string
 ) {
@@ -47,6 +53,6 @@ userSchema.methods.comparePassword = function comparePassword(
     return false;
   }
   return bcrypt.compare(candidate, this.password);
-};
+});
 
 export default mongoose.model('User', userSchema);

@@ -7,4 +7,10 @@ const workspaceSchema = new mongoose.Schema({
   },
 });
 
+workspaceSchema.set('toObject', { virtuals: true });
+
+workspaceSchema.method('toGraph', function toGraph(this: any) {
+  return JSON.parse(JSON.stringify(this));
+});
+
 export default mongoose.model('Workspace', workspaceSchema);

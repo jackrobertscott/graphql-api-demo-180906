@@ -29,26 +29,21 @@ interface IPetInput {
   userId: string;
 }
 
-const petToObject = (pet: any) => ({
-  ...pet.toObject(),
-  id: pet._id.toString(),
-  userId: pet.userId.toString(),
-});
-
 export const petResolvers: any = {
   Query: {
     async pets(_: any, { input }: { input: IPetInput }) {
-      const pets = await Pet.find(input);
-      return pets.map(petToObject);
+      const pets: any[] = await Pet.find(input);
+      return pets.map(pet => pet.toGraph());
     },
-    pet(_: any, { id }: { id: string }) {
-      return Pet.findById(id);
+    async pet(_: any, { id }: { id: string }) {
+      const pet: any = await Pet.findById(id);
+      return pet.toGraph();
     },
   },
   Mutation: {
     async addPet(_: any, { input }: { input: IPetInput }) {
       const pet: any = await Pet.create(input);
-      return petToObject(pet);
+      return pet.toGraph();
     },
   },
   Pet: {

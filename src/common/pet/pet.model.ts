@@ -12,4 +12,10 @@ const petSchema = new mongoose.Schema({
   },
 });
 
+petSchema.set('toObject', { virtuals: true });
+
+petSchema.method('toGraph', function toGraph(this: any) {
+  return JSON.parse(JSON.stringify(this));
+});
+
 export default mongoose.model('Pet', petSchema);

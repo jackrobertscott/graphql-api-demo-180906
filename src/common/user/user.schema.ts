@@ -37,16 +37,17 @@ interface IUserInput {
 
 export const userResolvers: any = {
   Query: {
-    users(_: any, { input }: { input: IUserInput }) {
-      return User.find(input);
+    async users(_: any, { input }: { input: IUserInput }) {
+      const users: any[] = await User.find(input);
+      return users.map(user => user.toGraph());
     },
-    user(_: any, { id }: { id: string }) {
-      return User.findById(id);
+    async user(_: any, { id }: { id: string }) {
+      const user: any = User.findById(id);
+      return user.toGraph();
     },
     async loginUser(
       _: any,
-      { email, password }: { email: string; password: string },
-      context: any
+      { email, password }: { email: string; password: string }
     ) {
       const user: any = await User.findOne({ email });
       const match: boolean = await user.comparePassword(password);
