@@ -1,4 +1,3 @@
-import { makeExecutableSchema } from 'graphql-tools';
 import Pet from './pet.model';
 import User from '../user/user.model';
 

@@ -1,4 +1,3 @@
-import { makeExecutableSchema } from 'graphql-tools';
 import Workspace from './workspace.model';
 
 export const workspaceTypeDefs = `
@@ -11,8 +10,12 @@ export const workspaceTypeDefs = `
     name: String
   }
 
+  input FilterInput {
+    limit: Int
+  }
+
   extend type Query {
-    workspaces(input: WorkspaceInput): [Workspace]
+    workspaces(input: WorkspaceInput, filter: FilterInput): [Workspace]
     workspace(id: String!): Workspace
   }
 
@@ -26,10 +29,19 @@ interface IWorkspaceInput {
   lastName: string;
 }
 
+interface IFilter {
+  limit: number;
+}
+
 export const workspaceResolvers: any = {
   Query: {
-    workspaces(_: any, { input }: { input: IWorkspaceInput }) {
-      return Workspace.find(input);
+    workspaces(
+      _: any,
+      { input, filter }: { input: IWorkspaceInput; filter: IFilter }
+    ) {
+      return Workspace.find(input, null, {
+        limit: filter && filter.limit,
+      });
     },
     workspace(_: any, { id }: { id: string }) {
       return Workspace.findById(id);
