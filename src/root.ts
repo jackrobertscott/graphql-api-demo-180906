@@ -1,0 +1,14 @@
+export default [
+  `
+  schema {
+    query: Query
+    mutation: Mutation
+  }
+  `,
+  `
+  type Query
+  `,
+  `
+  type Mutation
+  `,
+];

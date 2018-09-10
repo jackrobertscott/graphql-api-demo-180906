@@ -1,20 +1,34 @@
 import { ApolloServer, gql } from 'apollo-server';
-import { mergeSchemas } from 'graphql-tools';
+import { makeExecutableSchema } from 'graphql-tools';
+import { merge } from 'lodash';
 import mongoose from 'mongoose';
 
-import userSchema from './common/user/user.schema';
-import workspaceSchema from './common/workspace/workspace.schema';
+import rootTypeDefs from './root';
+import { userResolvers, userTypeDefs } from './common/user/user.schema';
+import {
+  workspaceResolvers,
+  workspaceTypeDefs,
+} from './common/workspace/workspace.schema';
+import { petResolvers, petTypeDefs } from './common/pet/pet.schema';
 
 mongoose.connect(
-  'mongodb://localhost/snippets',
+  // replace with environment variable in production
+  'mongodb://localhost/graphql-demo',
   { useNewUrlParser: true }
 );
 
-const schema = mergeSchemas({
-  schemas: [userSchema, workspaceSchema],
+const schema = makeExecutableSchema({
+  typeDefs: [...rootTypeDefs, userTypeDefs, workspaceTypeDefs, petTypeDefs],
+  resolvers: merge(userResolvers, workspaceResolvers, petResolvers),
 });
 
-const server = new ApolloServer({ schema });
+const server = new ApolloServer({
+  schema,
+  formatError: (error: any) => {
+    console.log(error);
+    return new Error('Internal server error');
+  },
+});
 
 server.listen().then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`);

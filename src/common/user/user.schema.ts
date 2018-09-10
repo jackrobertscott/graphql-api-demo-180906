@@ -1,8 +1,7 @@
-import { gql } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
 import User from './user.model';
 
-const typeDefs = gql`
+export const userTypeDefs = `
   type User {
     id: ID!
     firstName: String
@@ -14,20 +13,15 @@ const typeDefs = gql`
     lastName: String
   }
 
-  type Query {
+  extend type Query {
     users(input: UserInput): [User]
     user(id: String!): User
   }
 
-  type Mutation {
+  extend type Mutation {
     addUser(input: UserInput!): User
     editUser(id: String!, input: UserInput!): User
     deleteUser(id: String!): User
-  }
-
-  schema {
-    query: Query
-    mutation: Mutation
   }
 `;
 
@@ -36,7 +30,7 @@ interface IUserInput {
   lastName: string;
 }
 
-const resolvers: any = {
+export const userResolvers: any = {
   Query: {
     users(_: any, { input }: { input: IUserInput }) {
       return User.find(input);
@@ -57,8 +51,3 @@ const resolvers: any = {
     },
   },
 };
-
-export default makeExecutableSchema({
-  typeDefs,
-  resolvers,
-});
