@@ -27,25 +27,17 @@ export const userTypeDefs = `
   }
 `;
 
-interface IUserInput {
-  firstName: string;
-  lastName: string;
-}
-
 export const userResolvers: any = {
   Query: {
-    async users(_: any, { input }: { input: IUserInput }) {
+    async users(_, { input }) {
       const users: any[] = await User.find(input);
       return users.map(user => user.toGraph());
     },
-    async user(_: any, { id }: { id: string }) {
+    async user(_, { id }: { id: string }) {
       const user: any = User.findById(id);
       return user.toGraph();
     },
-    async loginUser(
-      _: any,
-      { email, password }: { email: string; password: string }
-    ) {
+    async loginUser(_, { email, password }) {
       const user: any = await User.findOne({ email });
       const match: boolean = await user.comparePassword(password);
       if (match) {
@@ -55,13 +47,13 @@ export const userResolvers: any = {
     },
   },
   Mutation: {
-    addUser(_: any, { input }: { input: IUserInput }) {
+    addUser(_, { input }) {
       return User.create(input);
     },
-    editUser(_: any, { id, input }: { id: string; input: IUserInput }) {
+    editUser(_, { id, input }) {
       return User.findByIdAndUpdate(id, input);
     },
-    deleteUser(_: any, { id }: { id: string }) {
+    deleteUser(_, { id }: { id: string }) {
       return User.findByIdAndRemove(id);
     },
   },

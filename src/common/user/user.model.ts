@@ -27,7 +27,7 @@ userSchema.method('toGraph', function toGraph(this: any) {
   return JSON.parse(JSON.stringify(this));
 });
 
-userSchema.pre('save', function preSave(this: any, next) {
+userSchema.pre('save', function preSave(this: any, next: () => {}) {
   if (!this.isModified('password')) {
     next();
   } else {

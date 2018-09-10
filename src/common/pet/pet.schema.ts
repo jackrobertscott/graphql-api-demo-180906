@@ -21,24 +21,19 @@ export const petTypeDefs = `
   }
 `;
 
-interface IPetInput {
-  name: string;
-  userId: string;
-}
-
 export const petResolvers: any = {
   Query: {
-    async pets(_: any, { input }: { input: IPetInput }) {
+    async pets(_, { input }) {
       const pets: any[] = await Pet.find(input);
       return pets.map(pet => pet.toGraph());
     },
-    async pet(_: any, { id }: { id: string }) {
+    async pet(_, { id }) {
       const pet: any = await Pet.findById(id);
       return pet.toGraph();
     },
   },
   Mutation: {
-    async addPet(_: any, { input }: { input: IPetInput }) {
+    async addPet(_, { input }) {
       const pet: any = await Pet.create(input);
       return pet.toGraph();
     },

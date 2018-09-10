@@ -20,31 +20,19 @@ export const workspaceTypeDefs = `
   }
 `;
 
-interface IWorkspaceInput {
-  firstName: string;
-  lastName: string;
-}
-
-interface IFilter {
-  limit: number;
-}
-
 export const workspaceResolvers: any = {
   Query: {
-    workspaces(
-      _: any,
-      { input, filter }: { input: IWorkspaceInput; filter: IFilter }
-    ) {
+    workspaces(_, { input, filter }) {
       return Workspace.find(input, null, {
         limit: filter && filter.limit,
       });
     },
-    workspace(_: any, { id }: { id: string }) {
+    workspace(_, { id }) {
       return Workspace.findById(id);
     },
   },
   Mutation: {
-    addWorkspace(_: any, { input }: { input: IWorkspaceInput }) {
+    addWorkspace(_, { input }) {
       return Workspace.create(input);
     },
   },

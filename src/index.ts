@@ -3,7 +3,6 @@ import { ApolloServer } from 'apollo-server';
 import { makeExecutableSchema } from 'graphql-tools';
 import { merge } from 'lodash';
 import mongoose from 'mongoose';
-
 import rootTypeDefs from './root';
 import { userResolvers, userTypeDefs } from './common/user/user.schema';
 import {
@@ -26,7 +25,7 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
-  async context({ req }: { req: any }) {
+  async context({ req }) {
     const token = req && req.headers && req.headers.authorization;
     if (token) {
       const data: any = jwt.verify(token, 'this is super secret');
