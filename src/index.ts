@@ -11,10 +11,10 @@ import {
 } from './common/workspace/workspace.schema';
 import { petResolvers, petTypeDefs } from './common/pet/pet.schema';
 import User from './common/user/user.model';
+import config from './config';
 
 mongoose.connect(
-  // replace with environment variable in production
-  'mongodb://localhost/graphql-demo',
+  config.mongodb.uri,
   { useNewUrlParser: true }
 );
 
@@ -25,10 +25,14 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
+  formatError(error) {
+    console.log(error);
+    return error;
+  },
   async context({ req }) {
     const token = req && req.headers && req.headers.authorization;
     if (token) {
-      const data: any = jwt.verify(token, 'this is super secret');
+      const data: any = jwt.verify(token, config.token.secret);
       const user = data.id ? await User.findById(data.id) : null;
       return { user };
     }

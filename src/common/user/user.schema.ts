@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from './user.model';
+import config from '../../config';
 
 export const userTypeDefs = `
   type User {
@@ -41,7 +42,7 @@ export const userResolvers: any = {
       const user: any = await User.findOne({ email });
       const match: boolean = await user.comparePassword(password);
       if (match) {
-        return jwt.sign({ id: user.id }, 'this is super secret');
+        return jwt.sign({ id: user.id }, config.token.secret);
       }
       throw new Error('Not Authorised.');
     },
