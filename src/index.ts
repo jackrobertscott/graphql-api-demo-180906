@@ -24,10 +24,6 @@ const schema = makeExecutableSchema({
 
 const server = new ApolloServer({
   schema,
-  formatError: (error: any) => {
-    console.log(error);
-    return new Error('Internal server error');
-  },
 });
 
 server.listen().then(({ url }) => {
