@@ -5,20 +5,16 @@ export const workspaceTypeDefs = `
     id: ID!
     name: String!
   }
-
   input WorkspaceInput {
     name: String
   }
-
   input FilterInput {
     limit: Int
   }
-
   extend type Query {
     workspaces(input: WorkspaceInput, filter: FilterInput): [Workspace]
     workspace(id: String!): Workspace
   }
-
   extend type Mutation {
     addWorkspace(input: WorkspaceInput!): Workspace
   }

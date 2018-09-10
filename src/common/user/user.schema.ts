@@ -9,20 +9,17 @@ export const userTypeDefs = `
     firstName: String!
     lastName: String!
   }
-
   input UserInput {
     email: String
     password: String
     firstName: String
     lastName: String
   }
-
   extend type Query {
     users(input: UserInput): [User]
     user(id: String!): User
     loginUser(email: String!, password: String!): String
   }
-
   extend type Mutation {
     addUser(input: UserInput!): User
     editUser(id: String!, input: UserInput!): User

@@ -20,7 +20,7 @@ mongoose.connect(
 );
 
 const schema = makeExecutableSchema({
-  typeDefs: [...rootTypeDefs, userTypeDefs, workspaceTypeDefs, petTypeDefs],
+  typeDefs: [rootTypeDefs, userTypeDefs, workspaceTypeDefs, petTypeDefs],
   resolvers: merge(userResolvers, workspaceResolvers, petResolvers),
 });
 

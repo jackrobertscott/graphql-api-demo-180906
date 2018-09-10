@@ -8,17 +8,14 @@ export const petTypeDefs = `
     userId: ID
     user: User
   }
-
   input PetInput {
     name: String!
     userId: ID!
   }
-
   extend type Query {
     pets(input: PetInput): [Pet]
     pet(id: String!): Pet
   }
-
   extend type Mutation {
     addPet(input: PetInput!): Pet
   }
