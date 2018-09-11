@@ -1,39 +1,58 @@
 import Workspace from './workspace.model';
 
+/**
+ * Export a string which contains our GraphQL type definitions.
+ */
 export const workspaceTypeDefs = `
+
   type Workspace {
     id: ID!
     name: String!
+    rating: Int
   }
+
   input WorkspaceInput {
     name: String
+    rating: Int
   }
-  input FilterInput {
+
+  input WorkspaceFilterInput {
     limit: Int
   }
+
+  # Extending the root Query type.
   extend type Query {
-    workspaces(input: WorkspaceInput, filter: FilterInput): [Workspace]
+    workspaces(filter: WorkspaceFilterInput): [Workspace]
     workspace(id: String!): Workspace
   }
+
+  # Extending the root Mutation type.
   extend type Mutation {
     addWorkspace(input: WorkspaceInput!): Workspace
   }
+
 `;
 
+/**
+ * Exporting our resolver functions. Note that:
+ * 1. They can use async/await or return a Promise which Apollo will resolve for us.
+ * 2. The resolver property names match exactly with the schema types.
+ */
 export const workspaceResolvers: any = {
   Query: {
-    workspaces(_, { input, filter }) {
-      return Workspace.find(input, null, {
-        limit: filter && filter.limit,
-      });
+    async workspaces(_, { filter }) {
+      const workspaces: any[] = await Workspace.find({}, null, filter);
+      return workspaces.map(workspace => workspace.toGraph());
     },
-    workspace(_, { id }) {
-      return Workspace.findById(id);
+    async workspace(_, { id }) {
+      const workspace: any = await Workspace.findById(id);
+      return workspace.toGraph();
     },
   },
   Mutation: {
-    addWorkspace(_, { input }) {
-      return Workspace.create(input);
+    async addWorkspace(_, { input }) {
+      const workspace: any = await Workspace.create(input);
+      return workspace.toGraph();
     },
   },
 };
