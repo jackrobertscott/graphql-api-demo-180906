@@ -2,7 +2,8 @@ import bcrypt from 'bcryptjs';
 import mongoose from 'mongoose';
 
 /**
- * Here is the our user schema which will be used to validate the data sent to our database.
+ * Here is the our user schema which will be used to
+ * validate the data sent to our database.
  */
 const userSchema = new mongoose.Schema({
   workspaceId: {
@@ -28,19 +29,22 @@ const userSchema = new mongoose.Schema({
 });
 
 /**
- * This property will ensure our virtuals (including "id") are set on the user when we use it.
+ * This property will ensure our virtuals (including "id")
+ * are set on the user when we use it.
  */
 userSchema.set('toObject', { virtuals: true });
 
 /**
- * This is a helper method which converts mongoose properties from objects to strings, numbers, and booleans.
+ * This is a helper method which converts mongoose properties
+ * from objects to strings, numbers, and booleans.
  */
 userSchema.method('toGraph', function toGraph(this: any) {
   return JSON.parse(JSON.stringify(this));
 });
 
 /**
- * Never save the password directly onto the model, always encrypt first.
+ * Never save the password directly onto the model,
+ * always encrypt first.
  */
 userSchema.pre('save', function preSave(this: any, next: () => {}) {
   if (!this.isModified('password')) {
@@ -58,7 +62,8 @@ userSchema.pre('save', function preSave(this: any, next: () => {}) {
 });
 
 /**
- * Adds a method on the user object which we can use to compare a user's password with.
+ * Adds a method on the user object which we can use
+ * to compare a user's password with.
  */
 userSchema.method('comparePassword', function comparePassword(
   this: any,
@@ -74,6 +79,7 @@ userSchema.method('comparePassword', function comparePassword(
 });
 
 /**
- * Finally, we compile the schema into a model which we then export to be used by our GraphQL resolvers.
+ * Finally, we compile the schema into a model which we then
+ * export to be used by our GraphQL resolvers.
  */
 export default mongoose.model('User', userSchema);

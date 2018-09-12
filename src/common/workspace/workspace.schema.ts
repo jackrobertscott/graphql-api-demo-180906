@@ -35,8 +35,10 @@ export const workspaceTypeDefs = `
 
 /**
  * Exporting our resolver functions. Note that:
- * 1. They can use async/await or return a Promise which Apollo will resolve for us.
- * 2. The resolver property names match exactly with the schema types.
+ * 1. They can use async/await or return a Promise which
+ *    Apollo will resolve for us.
+ * 2. The resolver property names match exactly with the
+ *    schema types.
  */
 export const workspaceResolvers: any = {
   Query: {

@@ -52,15 +52,18 @@ export const userTypeDefs = `
 
 /**
  * Exporting our resolver functions. Note that:
- * 1. They can use async/await or return a Promise which Apollo will resolve for us.
- * 2. The resolver property names match exactly with the schema types.
+ * 1. They can use async/await or return a Promise which
+ *    Apollo will resolve for us.
+ * 2. The resolver property names match exactly with the
+ *    schema types.
  */
 export const userResolvers = {
   Query: {
     async users(_, { filter = {} }) {
       const users: any[] = await User.find({}, null, filter);
-      // notice that I have ": any[]" after the "users" variable? That is because I am using TypeScript
-      // but you can remove this and it will work normally with pure JavaScript
+      // notice that I have ": any[]" after the "users" variable?
+      // That is because I am using TypeScript but you can remove
+      // this and it will work normally with pure JavaScript
       return users.map(user => user.toGraph());
     },
     async user(_, { id }) {
