@@ -50,7 +50,7 @@ npm run start:ts
 
 ## Examples
 
-Here are some example queries which you can use as a starting point when using the playgorund.
+Here are some example queries which you can use as a starting point when using the playground.
 
 ```graphql
 query GetWorkspaces {
@@ -84,10 +84,6 @@ mutation UpdateUserWithWorkspace {
 }
 ```
 
-## Maintainers
+## Authors
 
 - [Jack Scott](https://twitter.com/jacrobsco)
-
-## License
-
-MIT
