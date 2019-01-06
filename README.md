@@ -77,7 +77,7 @@ mutation UpdateUserWithWorkspace {
   editUser(id: "<INSERT_A_USER_ID_HERE>", input: {
     workspaceId: "<INSERT_A_WORKSPACE_ID_HERE>"
   }) {
-  	workspace {
+    workspace {
       name
     } 
   }
