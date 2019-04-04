@@ -20,15 +20,7 @@ const petSchema = new mongoose.Schema({
  * This property will ensure our virtuals (including "id")
  * are set on the user when we use it.
  */
-petSchema.set('toObject', { virtuals: true });
-
-/**
- * This is a helper method which converts mongoose properties
- * from objects to strings, numbers, and booleans.
- */
-petSchema.method('toGraph', function toGraph(this: any) {
-  return JSON.parse(JSON.stringify(this));
-});
+petSchema.set('toObject', { getters: true, virtuals: true });
 
 /**
  * Finally, we compile the schema into a model which we then

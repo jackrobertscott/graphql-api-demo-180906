@@ -18,15 +18,7 @@ const workspaceSchema = new mongoose.Schema({
  * This property will ensure our virtuals (including "id")
  * are set on the user when we use it.
  */
-workspaceSchema.set('toObject', { virtuals: true });
-
-/**
- * This is a helper method which converts mongoose properties
- * from objects to strings, numbers, and booleans.
- */
-workspaceSchema.method('toGraph', function toGraph(this: any) {
-  return JSON.parse(JSON.stringify(this));
-});
+workspaceSchema.set('toObject', { getters: true, virtuals: true });
 
 /**
  * Finally, we compile the schema into a model which we then

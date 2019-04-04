@@ -64,25 +64,25 @@ export const userResolvers = {
       // notice that I have ": any[]" after the "users" variable?
       // That is because I am using TypeScript but you can remove
       // this and it will work normally with pure JavaScript
-      return users.map(user => user.toGraph());
+      return users.map(user => user.toObject());
     },
     async user(_, { id }) {
       const user: any = await User.findById(id);
-      return user.toGraph();
+      return user.toObject();
     },
   },
   Mutation: {
     async addUser(_, { input }) {
       const user: any = await User.create(input);
-      return user.toGraph();
+      return user.toObject();
     },
     async editUser(_, { id, input }) {
       const user: any = await User.findByIdAndUpdate(id, input);
-      return user.toGraph();
+      return user.toObject();
     },
     async deleteUser(_, { id }) {
       const user: any = await User.findByIdAndRemove(id);
-      return user ? user.toGraph() : null;
+      return user ? user.toObject() : null;
     },
     async loginUser(_, { email, password }) {
       const user: any = await User.findOne({ email });
@@ -97,7 +97,7 @@ export const userResolvers = {
     async workspace(user: { workspaceId: string }) {
       if (user.workspaceId) {
         const workspace: any = await Workspace.findById(user.workspaceId);
-        return workspace.toGraph();
+        return workspace.toObject();
       }
       return null;
     },

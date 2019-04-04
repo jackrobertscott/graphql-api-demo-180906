@@ -44,17 +44,17 @@ export const workspaceResolvers: any = {
   Query: {
     async workspaces(_, { filter }) {
       const workspaces: any[] = await Workspace.find({}, null, filter);
-      return workspaces.map(workspace => workspace.toGraph());
+      return workspaces.map(workspace => workspace.toObject());
     },
     async workspace(_, { id }) {
       const workspace: any = await Workspace.findById(id);
-      return workspace.toGraph();
+      return workspace.toObject();
     },
   },
   Mutation: {
     async addWorkspace(_, { input }) {
       const workspace: any = await Workspace.create(input);
-      return workspace.toGraph();
+      return workspace.toObject();
     },
   },
 };
